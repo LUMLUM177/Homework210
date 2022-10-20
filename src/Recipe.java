@@ -4,7 +4,7 @@ public class Recipe {
 
     private String name;
     private double totalCost;
-    HashMap<Product, Integer> products = new HashMap<>();
+    private HashMap<Product, Integer> products = new HashMap<>();
 
     public Recipe(String name, Product product, Integer count) {
         this.name = name;
