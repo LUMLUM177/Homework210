@@ -1,20 +1,24 @@
-import java.lang.reflect.Array;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
-    public static void addCollection(String key, Integer value, HashMap<String, Integer> hashMap) {
-        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
-            if (entry.getKey().equals(key) && entry.getValue().equals(value)) {
-                throw new RuntimeException("Эта пара уже существует в коллекции!");
-            }
-            hashMap.put(key, value);
-            return;
+    static final int SIZE_LIST = 3;
+
+    public static void fillListRandomValues(List<Integer> list) {
+        Random random = new Random();
+        for (int i = 0; i < SIZE_LIST; i++) {
+            list.add(random.nextInt(1001));
         }
     }
+
+    public static Integer calculateSumList(List<Integer> list) {
+        Integer sum = 0;
+        for (int i = 0; i < SIZE_LIST; i++) {
+            sum += list.get(i);
+        }
+        return sum;
+    }
+
 
     public static void main(String[] args) {
 
@@ -46,12 +50,12 @@ public class Main {
                 phoneBook11, phoneBook12, phoneBook13, phoneBook14, phoneBook15,
                 phoneBook16, phoneBook17, phoneBook18, phoneBook19, phoneBook20};
 
-        for (int i = 0; i < phones.length; i++) {
-            phoneBook.put(phones[i].getName(), phones[i].getPhone());
+        for (PhoneBook phone : phones) {
+            phoneBook.put(phone.getName(), phone.getPhone());
         }
 
-        for (int i = 0; i < phones.length; i++) {
-            System.out.println(phoneBook.get(phones[i].getName()));
+        for (PhoneBook phone : phones) {
+            System.out.println(phoneBook.get(phone.getName()));
         }
 
         Product banana = new Product("Банан", 50, 5);
@@ -65,11 +69,13 @@ public class Main {
 
         Recipe cezar = new Recipe("Цезарь", meat, 3);
         cezar.addProduct(apple, 5);
+        cezar.addProduct(banana, 5);
         Recipe kaleidoscope = new Recipe("Калейдоскоп", salat, 2);
         kaleidoscope.addProduct(mayonnaise, 3);
         Recipe milkCocktaile = new Recipe("Молочный коктейль", apple, 5);
+        milkCocktaile.addProduct(milk, 2);
         Recipe fructesSalat = new Recipe("Фруктовый салат", kiwi, 4);
-        fructesSalat.addProduct(orange, 4);
+        fructesSalat.addProduct(orange, 2);
 
         Set<Recipe> recipes = new HashSet<>();
         recipes.add(cezar);
@@ -78,20 +84,78 @@ public class Main {
         recipes.add(fructesSalat);
 
         System.out.println();
-        System.out.println(recipes);
+        System.out.println(recipes + "\n");
 
-        HashMap<String, Integer> collection = new HashMap<>();
-        collection.put("Первый", 111);
-        collection.put("Второй", 222);
-        collection.put("Третий", 333);
-        collection.put("Четвёртый", 444);
-        collection.put("Пятый", 555);
+        CollectionNumbers collection = new CollectionNumbers();
 
-        System.out.println(collection);
-        addCollection("Шестой", 666, collection);
-        System.out.println(collection);
-        addCollection("Второй", 777, collection);
-        System.out.println(collection);
+        Numbers number1 = new Numbers("Первый", 111);
+        Numbers number2 = new Numbers("Второй", 222);
+        Numbers number3 = new Numbers("Третий", 333);
+        Numbers number4 = new Numbers("Четвёртый", 444);
+        Numbers number5 = new Numbers("Пятый", 555);
+
+        collection.addNumberToCollection(number1);
+        collection.addNumberToCollection(number2);
+        collection.addNumberToCollection(number3);
+        collection.addNumberToCollection(number4);
+        collection.addNumberToCollection(number5);
+        collection.addNumberToCollection(new Numbers("Пятый", 55));
+        collection.addNumberToCollection(new Numbers("Пятый", 66));
+//        collection.addNumberToCollection(number4);
+        System.out.println(collection + "\n");
+
+        Map<String, List<Integer>> oldCollection = new HashMap<>();
+        Map<String, Integer> newCollection = new HashMap<>();
+
+        List<Integer> numbers = new ArrayList<>(SIZE_LIST);
+        List<Integer> numbers2 = new ArrayList<>(SIZE_LIST);
+        List<Integer> numbers3 = new ArrayList<>(SIZE_LIST);
+        List<Integer> numbers4 = new ArrayList<>(SIZE_LIST);
+        List<Integer> numbers5 = new ArrayList<>(SIZE_LIST);
+
+        fillListRandomValues(numbers);
+        fillListRandomValues(numbers2);
+        fillListRandomValues(numbers3);
+        fillListRandomValues(numbers4);
+        fillListRandomValues(numbers5);
+
+        oldCollection.put("Первый список", numbers);
+        oldCollection.put("Второй список", numbers2);
+        oldCollection.put("Третий список", numbers3);
+        oldCollection.put("Четвёртый список", numbers4);
+        oldCollection.put("Пятый список", numbers5);
+
+        System.out.println("Первоначальная коллеция типа <String, List<Integer>>: ");
+        for (Map.Entry<String, List<Integer>> entry : oldCollection.entrySet()) {
+            System.out.println(entry.getKey() + " --> " + entry.getValue());
+            newCollection.put(entry.getKey(), calculateSumList(entry.getValue()));
+        }
+
+        System.out.println();
+        System.out.println("Новая коллеция типа <String, Integer>: ");
+        for (Map.Entry<String, Integer> entry : newCollection.entrySet()) {
+            System.out.println(entry.getKey() + " --> " + entry.getValue());
+        }
+
+        Map<String, Integer> lastTaskInThisLesson = new LinkedHashMap<>();
+        lastTaskInThisLesson.put("Время 18:36:20", 0);
+        lastTaskInThisLesson.put("Время 18:36:25", 1);
+        lastTaskInThisLesson.put("Время 18:36:30", 2);
+        lastTaskInThisLesson.put("Время 18:36:35", 3);
+        lastTaskInThisLesson.put("Время 18:36:40", 4);
+        lastTaskInThisLesson.put("Время 18:36:45", 5);
+        lastTaskInThisLesson.put("Время 18:36:48", 6);
+        lastTaskInThisLesson.put("Время 18:36:51", 7);
+        lastTaskInThisLesson.put("Время 18:36:54", 8);
+        lastTaskInThisLesson.put("Время 18:36:57", 9);
+
+        System.out.println();
+        int i = 1;
+
+        for (Map.Entry<String, Integer> entry : lastTaskInThisLesson.entrySet()) {
+            System.out.println("Запись № " + i + ": " + entry.getKey() + " --> " + entry.getValue());
+            i++;
+        }
 
     }
 }
