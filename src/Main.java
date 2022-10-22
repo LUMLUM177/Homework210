@@ -125,14 +125,14 @@ public class Main {
         oldCollection.put("Четвёртый список", numbers4);
         oldCollection.put("Пятый список", numbers5);
 
-        System.out.println("Первоначальная коллеция типа <String, List<Integer>>: ");
+        System.out.println("Первоначальная коллекция типа <String, List<Integer>>: ");
         for (Map.Entry<String, List<Integer>> entry : oldCollection.entrySet()) {
             System.out.println(entry.getKey() + " --> " + entry.getValue());
             newCollection.put(entry.getKey(), calculateSumList(entry.getValue()));
         }
 
         System.out.println();
-        System.out.println("Новая коллеция типа <String, Integer>: ");
+        System.out.println("Новая коллекция типа <String, Integer>: ");
         for (Map.Entry<String, Integer> entry : newCollection.entrySet()) {
             System.out.println(entry.getKey() + " --> " + entry.getValue());
         }
